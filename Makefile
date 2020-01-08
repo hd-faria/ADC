@@ -12,8 +12,7 @@ VPATH = /usr/lib/avr/include ../include/
 LINK_TARGET=test
 
 OBJECT_FILES= \
-$(LINK_TARGET).o        \
-#rosi_sm.o
+$(LINK_TARGET).o 
 
 REBUILDABLES= \
 $(LINK_TARGET).hex \
