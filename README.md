@@ -1,4 +1,4 @@
-# analogRead
+# ADC
 
 Library to read AT90CAN uC analog port.
 
