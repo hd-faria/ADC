@@ -14,8 +14,14 @@
 extern "C" {
 #endif
 
-void ADC_enable(void);
-void ADC_disable(void);
+void ADC_turn_on(void);
+void ADC_turn_off(void);
+void ADC_start_conversion(void);
+
+void ADC_config();
+
+int ADC_read8(void);
+int ADC_read10(void);
 
 #ifdef __cplusplus
 }
