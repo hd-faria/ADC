@@ -14,11 +14,14 @@
 extern "C" {
 #endif
 
+#define LEFTADJUSTED 0
+#define RIGHTADJUSTED 1
+
 void ADC_turn_on(void);
 void ADC_turn_off(void);
 void ADC_start_conversion(void);
 
-void ADC_config();
+void ADC_config(char resolution);
 
 int ADC_read8(void);
 int ADC_read10(void);

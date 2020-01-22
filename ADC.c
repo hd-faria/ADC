@@ -10,6 +10,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "ADC.h"
 
@@ -25,10 +26,21 @@ void ADC_start_conversion(void){
     ADCSRA |= (1<<ADSC);    //Start conversion
 }
 
-void ADC_config(){
+void ADC_config(char resolution){
+
+    const int div_factor_max = F_CPU/50000;
+    const int div_factor_min = F_CPU/200000;
    		ADCSRA |= (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);	//Enable prescaler F_CPU=16 000 000; 50 000 < fs < 200 000; 320 > Division factor = 128 > 80
-	//8-bits or 10-bits results
-		ADMUX |= (1<<ADLAR);// set to left adjust, clear to right adjust
+
+    switch(resolution){
+        case RIGHTADJUSTED: 
+		    ADMUX &= ~(1<<ADLAR);// set to left adjust, clear to right adjust
+            break;
+        default: //LEFTADJUSTED
+		    ADMUX |= (1<<ADLAR);// set to left adjust, clear to right adjust
+            break;
+    }
+	
 	// ADMUX &= ~(1<<REFS1) & ~(1<<REFS0) // Selecioanado referência por padrão já é 00
 	ADCSRA |= (1<<ADIE);//Enable interrupt function in ADC
 }
