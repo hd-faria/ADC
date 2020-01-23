@@ -22,7 +22,7 @@ $(LINK_TARGET).hex \
 $(LINK_TARGET).elf \
 $(OBJECT_FILES)
 
-.PHONY : all flash readeeprom readflash clean
+.PHONY : all flash readeeprom readflash clean flashMKII
 
 all : $(LINK_TARGET).hex
 	@rm -f *.dep
@@ -38,6 +38,11 @@ $(LINK_TARGET).lst : $(LINK_TARGET).elf
 
 flash : $(LINK_TARGET).hex
 	avrdude -p $(MCU) -c atmelice_isp -U flash:w:$(LINK_TARGET).hex
+	@rm -f *.elf *.dep *.o
+	@echo Done flashing.
+
+flashMKII : $(LINK_TARGET).hex
+	avrdude -p $(MCU) -c avrispmkII -U flash:w:$(LINK_TARGET).hex
 	@rm -f *.elf *.dep *.o
 	@echo Done flashing.
 

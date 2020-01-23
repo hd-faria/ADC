@@ -44,6 +44,72 @@ void ADC_config(char resolution){
 	// ADMUX &= ~(1<<REFS1) & ~(1<<REFS0) // Selecioanado referência por padrão já é 00
 	ADCSRA |= (1<<ADIE);//Enable interrupt function in ADC
 }
+void ADC_select_reference(uint8_t _reference){
+    switch (_reference){
+    
+    case AREF:
+        ADMUX &= ~(1<<REFS1) & ~(1<<REFS0);
+        break;
+
+    case AVCC:
+        ADMUX |= (1<<REFS0);
+        ADMUX &= ~(1<<REFS1);        
+        break;
+    
+    default:
+        break;
+    }
+
+}
+void ADC_channel_selection(uint8_t _pin){
+    switch (_pin)
+    {
+    case PF0:
+            ADMUX &= ~(1<<MUX4) & ~(1<<MUX3) & ~(1<<MUX2) & ~(1<<MUX1) & ~(1<<MUX0); 
+        break;
+    
+    case PF1:
+            ADMUX &= ~(1<<MUX4) & ~(1<<MUX3) & ~(1<<MUX2) & ~(1<<MUX1) & ~(1<<MUX0);
+            ADMUX |= (1<<MUX0);             
+        break;
+    
+    case PF2:
+            ADMUX &= ~(1<<MUX4) & ~(1<<MUX3) & ~(1<<MUX2) & ~(1<<MUX1) & ~(1<<MUX0);
+            ADMUX |= (1<<MUX1);             
+        break;
+
+    case PF3:
+            ADMUX &= ~(1<<MUX4) & ~(1<<MUX3) & ~(1<<MUX2) & ~(1<<MUX1) & ~(1<<MUX0);
+            ADMUX |= (1<<MUX1) | (1<<MUX0);             
+        break;
+    
+    case PF4:
+            ADMUX &= ~(1<<MUX4) & ~(1<<MUX3) & ~(1<<MUX2) & ~(1<<MUX1) & ~(1<<MUX0);
+            ADMUX |= (1<<MUX2);             
+        break;
+
+    case PF5:
+            ADMUX &= ~(1<<MUX4) & ~(1<<MUX3) & ~(1<<MUX2) & ~(1<<MUX1) & ~(1<<MUX0);
+            ADMUX |= (1<<MUX2) | (1<<MUX0);             
+        break;
+
+    case PF6:
+            ADMUX &= ~(1<<MUX4) & ~(1<<MUX3) & ~(1<<MUX2) & ~(1<<MUX1) & ~(1<<MUX0);
+            ADMUX |= (1<<MUX2) | (1<<MUX1);             
+        break;
+
+    case PF7:
+            ADMUX &= ~(1<<MUX4) & ~(1<<MUX3) & ~(1<<MUX2) & ~(1<<MUX1) & ~(1<<MUX0);
+            ADMUX |= (1<<MUX2) | (1<<MUX1) | (1<<MUX0);             
+        break;        
+
+    default:
+
+        //#error "No valid configuration" 
+
+        break;
+    }
+}
 
 int ADC_read8(){
     if(ADLAR){ //left adjusted
